@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package vista;
+package cine.vista;
 
-import datos.daoUsuario;
+import cine.modelo.daoUsuario;
 import cine.controlador.ClsUsuarios;
 import java.awt.HeadlessException;
 

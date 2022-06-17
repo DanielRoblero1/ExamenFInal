@@ -1,4 +1,4 @@
-    package datos;
+    package cine.modelo;
 
 import java.sql.*;
 
