@@ -5,7 +5,7 @@
  */
 package datos;
 
-import domain.Vendedor;
+import cine.controlador.Vendedor;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -33,7 +33,7 @@ public class AplicacionDAO {
         List<Vendedor> vendedores = new ArrayList<Vendedor>();
 
         try {
-            conn = Conexion.getConnection();
+            conn = ClsConexion.getConnection();
             stmt = conn.prepareStatement(SQL_SELECT);
             rs = stmt.executeQuery();
             while (rs.next()) {
@@ -52,9 +52,9 @@ public class AplicacionDAO {
         } catch (SQLException ex) {
             ex.printStackTrace(System.out);
         } finally {
-            Conexion.close(rs);
-            Conexion.close(stmt);
-            Conexion.close(conn);
+            ClsConexion.close(rs);
+            ClsConexion.close(stmt);
+            ClsConexion.close(conn);
         }
 
         return vendedores;
@@ -65,7 +65,7 @@ public class AplicacionDAO {
         PreparedStatement stmt = null;
         int rows = 0;
         try {
-            conn = Conexion.getConnection();
+            conn = ClsConexion.getConnection();
             stmt = conn.prepareStatement(SQL_INSERT);
             stmt.setString(1, vendedor.getNombreVendedor());
             stmt.setString(2, vendedor.getDireVendedor());
@@ -77,8 +77,8 @@ public class AplicacionDAO {
         } catch (SQLException ex) {
             ex.printStackTrace(System.out);
         } finally {
-            Conexion.close(stmt);
-            Conexion.close(conn);
+            ClsConexion.close(stmt);
+            ClsConexion.close(conn);
         }
 
         return rows;
@@ -90,7 +90,7 @@ public class AplicacionDAO {
         int rows = 0;
 
         try {
-            conn = Conexion.getConnection();
+            conn = ClsConexion.getConnection();
             System.out.println("ejecutando query: " + SQL_UPDATE);
             stmt = conn.prepareStatement(SQL_UPDATE);
             stmt.setString(1, vendedor.getNombreVendedor());
@@ -103,8 +103,8 @@ public class AplicacionDAO {
         } catch (SQLException ex) {
             ex.printStackTrace(System.out);
         } finally {
-            Conexion.close(stmt);
-            Conexion.close(conn);
+            ClsConexion.close(stmt);
+            ClsConexion.close(conn);
         }
 
         return rows;
@@ -116,7 +116,7 @@ public class AplicacionDAO {
         int rows = 0;
 
         try {
-            conn = Conexion.getConnection();
+            conn = ClsConexion.getConnection();
             System.out.println("Ejecutando query:" + SQL_DELETE);
             stmt = conn.prepareStatement(SQL_DELETE);
             stmt.setInt(1, vendedor.getId_vendedor());
@@ -125,8 +125,8 @@ public class AplicacionDAO {
         } catch (SQLException ex) {
             ex.printStackTrace(System.out);
         } finally {
-            Conexion.close(stmt);
-            Conexion.close(conn);
+            ClsConexion.close(stmt);
+            ClsConexion.close(conn);
         }
 
         return rows;
@@ -141,7 +141,7 @@ public class AplicacionDAO {
         int rows = 0;
 
         try {
-            conn = Conexion.getConnection();
+            conn = ClsConexion.getConnection();
             System.out.println("Ejecutando query:" + SQL_QUERY);
             stmt = conn.prepareStatement(SQL_QUERY);
             stmt.setInt(1, vendedor.getId_vendedor());
@@ -162,9 +162,9 @@ public class AplicacionDAO {
         } catch (SQLException ex) {
             ex.printStackTrace(System.out);
         } finally {
-            Conexion.close(rs);
-            Conexion.close(stmt);
-            Conexion.close(conn);
+            ClsConexion.close(rs);
+            ClsConexion.close(stmt);
+            ClsConexion.close(conn);
         }
 
         //return vendedores;  // Si se utiliza un ArrayList

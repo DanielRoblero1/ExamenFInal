@@ -5,7 +5,7 @@
  */
 package datos;
 
-import domain.Empleado;
+import cine.controlador.Empleado;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -33,7 +33,7 @@ public class EmpleadoDAO {
         List<Empleado> empleados = new ArrayList<Empleado>();
 
         try {
-            conn = Conexion.getConnection();
+            conn = ClsConexion.getConnection();
             stmt = conn.prepareStatement(SQL_SELECT);
             rs = stmt.executeQuery();
             while (rs.next()) {
@@ -52,9 +52,9 @@ public class EmpleadoDAO {
         } catch (SQLException ex) {
             ex.printStackTrace(System.out);
         } finally {
-            Conexion.close(rs);
-            Conexion.close(stmt);
-            Conexion.close(conn);
+            ClsConexion.close(rs);
+            ClsConexion.close(stmt);
+            ClsConexion.close(conn);
         }
 
         return empleados;
@@ -65,7 +65,7 @@ public class EmpleadoDAO {
         PreparedStatement stmt = null;
         int rows = 0;
         try {
-            conn = Conexion.getConnection();
+            conn = ClsConexion.getConnection();
             stmt = conn.prepareStatement(SQL_INSERT);
             stmt.setString(1, empleado.getNombreEmpleado());
             stmt.setString(2, empleado.getDireEmpleado());
@@ -77,8 +77,8 @@ public class EmpleadoDAO {
         } catch (SQLException ex) {
             ex.printStackTrace(System.out);
         } finally {
-            Conexion.close(stmt);
-            Conexion.close(conn);
+            ClsConexion.close(stmt);
+            ClsConexion.close(conn);
         }
 
         return rows;
@@ -90,7 +90,7 @@ public class EmpleadoDAO {
         int rows = 0;
 
         try {
-            conn = Conexion.getConnection();
+            conn = ClsConexion.getConnection();
             System.out.println("ejecutando query: " + SQL_UPDATE);
             stmt = conn.prepareStatement(SQL_UPDATE);
             stmt.setString(1, empleado.getNombreEmpleado());
@@ -103,8 +103,8 @@ public class EmpleadoDAO {
         } catch (SQLException ex) {
             ex.printStackTrace(System.out);
         } finally {
-            Conexion.close(stmt);
-            Conexion.close(conn);
+            ClsConexion.close(stmt);
+            ClsConexion.close(conn);
         }
 
         return rows;
@@ -116,7 +116,7 @@ public class EmpleadoDAO {
         int rows = 0;
 
         try {
-            conn = Conexion.getConnection();
+            conn = ClsConexion.getConnection();
             System.out.println("Ejecutando query:" + SQL_DELETE);
             stmt = conn.prepareStatement(SQL_DELETE);
             stmt.setInt(1, empleado.getId_empleado());
@@ -125,8 +125,8 @@ public class EmpleadoDAO {
         } catch (SQLException ex) {
             ex.printStackTrace(System.out);
         } finally {
-            Conexion.close(stmt);
-            Conexion.close(conn);
+            ClsConexion.close(stmt);
+            ClsConexion.close(conn);
         }
 
         return rows;
@@ -141,7 +141,7 @@ public class EmpleadoDAO {
         int rows = 0;
 
         try {
-            conn = Conexion.getConnection();
+            conn = ClsConexion.getConnection();
             System.out.println("Ejecutando query:" + SQL_QUERY);
             stmt = conn.prepareStatement(SQL_QUERY);
             stmt.setInt(1, empleado.getId_empleado());
@@ -162,9 +162,9 @@ public class EmpleadoDAO {
         } catch (SQLException ex) {
             ex.printStackTrace(System.out);
         } finally {
-            Conexion.close(rs);
-            Conexion.close(stmt);
-            Conexion.close(conn);
+            ClsConexion.close(rs);
+            ClsConexion.close(stmt);
+            ClsConexion.close(conn);
         }
 
         //return empleados;  // Si se utiliza un ArrayList

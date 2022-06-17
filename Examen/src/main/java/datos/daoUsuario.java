@@ -5,7 +5,7 @@
  */
 package datos;
 
-import domain.Usuario;
+import cine.controlador.ClsUsuarios;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,33 +14,35 @@ import java.util.List;
  *
  * @author visitante
  */
-public class UsuarioDAO {
+public class daoUsuario {
 
-    private static final String SQL_SELECT = "SELECT id_usuario, username, password FROM usuario";
-    private static final String SQL_INSERT = "INSERT INTO usuario(username, password) VALUES(?, ?)";
-    private static final String SQL_UPDATE = "UPDATE usuario SET username=?, password=? WHERE id_usuario = ?";
-    private static final String SQL_DELETE = "DELETE FROM usuario WHERE id_usuario=?";
-    private static final String SQL_QUERY = "SELECT id_usuario, username, password FROM usuario WHERE username = ?";
+    private static final String SQL_SELECT = "SELECT idUsuarios , Usuario, Password, estado FROM usuarios";
+    private static final String SQL_INSERT = "INSERT INTO usuarios(Usuario, Password, estado) VALUES(?, ?, ?)";
+    private static final String SQL_UPDATE = "UPDATE usuarios SET Usuario=?, Password=?, estado=? WHERE idUsuario = ?";
+    private static final String SQL_DELETE = "DELETE FROM usuarios WHERE idUsuario=?";
+    private static final String SQL_QUERY = "SELECT idUsuarios , Usuario, Password, estado FROM usuarios WHERE Usuario = ?";
 
-    public List<Usuario> select() {
+    public List<ClsUsuarios> select() {
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
-        Usuario usuario = null;
-        List<Usuario> usuarios = new ArrayList<Usuario>();
+        ClsUsuarios usuario = null;
+        List<ClsUsuarios> usuarios = new ArrayList<ClsUsuarios>();
         try {
-            conn = Conexion.getConnection();
+            conn = ClsConexion.getConnection();
             stmt = conn.prepareStatement(SQL_SELECT);
             rs = stmt.executeQuery();
             while (rs.next()) {
-                int id_usuario = rs.getInt("id_usuario");
-                String username = rs.getString("username");
-                String password = rs.getString("password");
+                int idUsuario = rs.getInt("idUsuarios");
+                String Username = rs.getString("Username");
+                String Password = rs.getString("Password");
+                int estado = rs.getInt("estado");
 
-                usuario = new Usuario();
-                usuario.setId_usuario(id_usuario);
-                usuario.setUsername(username);
-                usuario.setPassword(password);
+                usuario = new ClsUsuarios();
+                usuario.setidUsuario(idUsuario);
+                usuario.setUsuario(Username);
+                usuario.setPassword(Password);
+                usuario.setestado(estado);
 
                 usuarios.add(usuario);
             }
@@ -48,22 +50,22 @@ public class UsuarioDAO {
         } catch (SQLException ex) {
             ex.printStackTrace(System.out);
         } finally {
-            Conexion.close(rs);
-            Conexion.close(stmt);
-            Conexion.close(conn);
+            ClsConexion.close(rs);
+            ClsConexion.close(stmt);
+            ClsConexion.close(conn);
         }
 
         return usuarios;
     }
 
-    public int insert(Usuario usuario) {
+    public int insert(ClsUsuarios usuario) {
         Connection conn = null;
         PreparedStatement stmt = null;
         int rows = 0;
         try {
-            conn = Conexion.getConnection();
+            conn = ClsConexion.getConnection();
             stmt = conn.prepareStatement(SQL_INSERT);
-            stmt.setString(1, usuario.getUsername());
+            stmt.setString(1, usuario.getUsuario());
             stmt.setString(2, usuario.getPassword());
 
             System.out.println("ejecutando query:" + SQL_INSERT);
@@ -72,24 +74,24 @@ public class UsuarioDAO {
         } catch (SQLException ex) {
             ex.printStackTrace(System.out);
         } finally {
-            Conexion.close(stmt);
-            Conexion.close(conn);
+            ClsConexion.close(stmt);
+            ClsConexion.close(conn);
         }
 
         return rows;
     }
 
-    public int update(Usuario usuario) {
+    public int update(ClsUsuarios usuario) {
         Connection conn = null;
         PreparedStatement stmt = null;
         int rows = 0;
         try {
-            conn = Conexion.getConnection();
+            conn = ClsConexion.getConnection();
             System.out.println("ejecutando query: " + SQL_UPDATE);
             stmt = conn.prepareStatement(SQL_UPDATE);
-            stmt.setString(1, usuario.getUsername());
+            stmt.setString(1, usuario.getUsuario());
             stmt.setString(2, usuario.getPassword());
-            stmt.setInt(3, usuario.getId_usuario());
+            stmt.setInt(3, usuario.getidUsuario());
 
             rows = stmt.executeUpdate();
             System.out.println("Registros actualizado:" + rows);
@@ -97,62 +99,64 @@ public class UsuarioDAO {
         } catch (SQLException ex) {
             ex.printStackTrace(System.out);
         } finally {
-            Conexion.close(stmt);
-            Conexion.close(conn);
+            ClsConexion.close(stmt);
+            ClsConexion.close(conn);
         }
 
         return rows;
     }
 
-    public int delete(Usuario usuario) {
+    public int delete(ClsUsuarios usuario) {
         Connection conn = null;
         PreparedStatement stmt = null;
         int rows = 0;
 
         try {
-            conn = Conexion.getConnection();
+            conn = ClsConexion.getConnection();
             System.out.println("Ejecutando query:" + SQL_DELETE);
             stmt = conn.prepareStatement(SQL_DELETE);
-            stmt.setInt(1, usuario.getId_usuario());
+            stmt.setInt(1, usuario.getidUsuario());
             rows = stmt.executeUpdate();
             System.out.println("Registros eliminados:" + rows);
         } catch (SQLException ex) {
             ex.printStackTrace(System.out);
         } finally {
-            Conexion.close(stmt);
-            Conexion.close(conn);
+            ClsConexion.close(stmt);
+            ClsConexion.close(conn);
         }
 
         return rows;
     }
 
-    public Usuario query(Usuario usuario) {
+    public ClsUsuarios query(ClsUsuarios usuario) {
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try {
-            conn = Conexion.getConnection();
+            conn = ClsConexion.getConnection();
             System.out.println("Ejecutando query:" + SQL_QUERY);
             stmt = conn.prepareStatement(SQL_QUERY);
-            stmt.setString(1, usuario.getUsername());
+            stmt.setString(1, usuario.getUsuario());
             rs = stmt.executeQuery();
             while (rs.next()) {
-                int id_usuario = rs.getInt("id_usuario");
-                String username = rs.getString("username");
-                String password = rs.getString("password");
+                int idUsuario = rs.getInt("idUsuarios");
+                String Usuario = rs.getString("Usuario");
+                String Password = rs.getString("Password");
+                int estado = rs.getInt("estado");
 
-                usuario = new Usuario();
-                usuario.setId_usuario(id_usuario);
-                usuario.setUsername(username);
-                usuario.setPassword(password);
+                usuario = new ClsUsuarios();
+                usuario.setidUsuario(idUsuario);
+                usuario.setUsuario(Usuario);
+                usuario.setPassword(Password);
+                usuario.setestado(estado);
             }
             //System.out.println("Registros buscado:" + persona);
         } catch (SQLException ex) {
             ex.printStackTrace(System.out);
         } finally {
-            Conexion.close(rs);
-            Conexion.close(stmt);
-            Conexion.close(conn);
+            ClsConexion.close(rs);
+            ClsConexion.close(stmt);
+            ClsConexion.close(conn);
         }
 
         //return personas;  // Si se utiliza un ArrayList

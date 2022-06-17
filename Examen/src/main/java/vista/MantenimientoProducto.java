@@ -9,7 +9,7 @@ package vista;
 
 import datos.AplicacionDAO;
 
-import domain.Vendedor;
+import cine.controlador.Vendedor;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import java.io.File;

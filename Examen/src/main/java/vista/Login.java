@@ -5,8 +5,8 @@
  */
 package vista;
 
-import datos.UsuarioDAO;
-import domain.Usuario;
+import datos.daoUsuario;
+import cine.controlador.ClsUsuarios;
 import java.awt.HeadlessException;
 
 import javax.swing.JOptionPane;
@@ -132,13 +132,13 @@ public class Login extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "NO PUEDEN HABER CAMPOS VACIOS", "ERROR", JOptionPane.ERROR_MESSAGE);
         } else {
             try {
-                Usuario usuarioAConsultar = new Usuario();
-                UsuarioDAO usuarioDAO = new UsuarioDAO();
-                usuarioAConsultar.setUsername(txtUsuario.getText().trim());
+                ClsUsuarios usuarioAConsultar = new ClsUsuarios();
+                daoUsuario usuarioDAO = new daoUsuario();
+                usuarioAConsultar.setUsuario(txtUsuario.getText().trim());
                 // Recuperación de información a través de otro objeto
                 usuarioAConsultar = usuarioDAO.query(usuarioAConsultar);
 
-                if (txtContraseña.getText().equals(usuarioAConsultar.getPassword()) && txtUsuario.getText().equals(usuarioAConsultar.getUsername())) {
+                if (txtContraseña.getText().equals(usuarioAConsultar.getPassword()) && txtUsuario.getText().equals(usuarioAConsultar.getUsuario())) {
                     JOptionPane.showMessageDialog(null, "Bienvenido al SISTEMA\n", "Mensaje de bienvenida", JOptionPane.INFORMATION_MESSAGE);
 
                     MdiGeneral menuGeneral = new MdiGeneral();

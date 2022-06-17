@@ -7,8 +7,8 @@ package vista;
 
 import datos.EmpleadoDAO;
 import datos.VendedorDAO;
-import domain.Empleado;
-import domain.Vendedor;
+import cine.controlador.Empleado;
+import cine.controlador.Vendedor;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import java.io.File;
